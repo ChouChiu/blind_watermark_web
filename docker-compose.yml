@@ -1,0 +1,19 @@
+services:
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    ports:
+      - "8001:8000"
+    environment:
+      - CORS_ORIGINS=http://localhost:3000,http://localhost:3080,https://bww.wwchun.top
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        BACKEND_URL: http://backend:8000
+    restart: unless-stopped
+    ports:
+      - "3080:3000"
+    depends_on:
+      - backend
