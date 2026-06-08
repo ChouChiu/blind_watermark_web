@@ -1,6 +1,6 @@
 # Blind Watermark Web
 
-Monorepo: FastAPI backend (`backend/`) + Next.js 16 frontend (`frontend/`). Chinese UI (zh-CN). No test suite. No CI/CD.
+Monorepo: FastAPI backend (`backend/`) + Next.js 16 frontend (`frontend/`). Chinese UI (zh-CN). No test suite. CI deploys to VPS on push to `main` (no lint/test gate).
 
 ## Next.js 16 — NOT the Next.js you know
 
@@ -30,7 +30,7 @@ Backend venv setup: `cd backend && python -m venv .venv && source .venv/bin/acti
 
 - **Backend**: FastAPI, single router `routers/watermark.py` at `/api/*`. Endpoints: `/api/embed`, `/api/extract`, `/api/capacity`, `/api/health`. Uses `blind-watermark` Python lib (DCT+SVD). Heavy image ops run in `asyncio.to_thread`.
 - **Frontend**: Next.js App Router. Two pages: `/embed` and `/extract`. Components in `components/`, shadcn/ui primitives in `components/ui/`.
-- **API contract**: Multipart form uploads, max 10MB per file. Backend returns JSON with `success` boolean. CORS locked to `localhost:3000`.
+- **API contract**: Multipart form uploads, max 10MB per file. Backend returns JSON with `success` boolean. CORS defaults to `localhost:3000`, configurable via `CORS_ORIGINS` env var.
 - **Frontend API base**: `process.env.NEXT_PUBLIC_API_URL` (defaults to `http://localhost:8000`). See `frontend/lib/api.ts`.
 
 ## Backend quirk: multiprocessing patch
@@ -55,3 +55,11 @@ Backend venv setup: `cd backend && python -m venv .venv && source .venv/bin/acti
 - Three watermark modes: `str` (text), `img` (image), `bit` (binary). Embed supports `str`/`img`; extract supports `str`/`img`/`bit`.
 - Backend returns base64-encoded images in JSON responses
 - Dark mode by default (hardcoded `dark` class on `<html>` in `layout.tsx`)
+- In dev, frontend calls backend directly at `localhost:8000`. In Docker/prod, `next.config.ts` rewrites `/api/*` to `BACKEND_URL` (defaults to `http://backend:8000` inside compose network).
+
+## Production / Docker
+
+- `docker-compose.yml`: backend on host `:8001`, frontend on host `:3080`. Prod URL: `https://bww.wwchun.top`.
+- Backend CORS is configurable via `CORS_ORIGINS` env var (comma-separated).
+- `deploy.sh` tars the repo (excluding `.venv`, `node_modules`, `.next`, `.git`), SCPs to VPS, runs `docker compose up --build`.
+- CI (`.github/workflows/deploy.yml`) SSHes into the VPS, does `git pull`, then `docker compose up --build`. No tests run in CI.
