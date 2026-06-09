@@ -60,7 +60,7 @@ export function FileUpload({
 			role="button"
 			tabIndex={0}
 			className={cn(
-				"relative flex flex-col items-center justify-center rounded-xl border border-dashed border-white/[0.08] bg-muted/10 px-6 py-10 text-center transition-all duration-200 hover:border-white/[0.2] hover:bg-muted/20 cursor-pointer shadow-inner shadow-black/10",
+				"relative flex flex-col items-center justify-center rounded-xl border border-dashed border-white/[0.08] bg-muted/10 px-4 sm:px-6 py-6 sm:py-10 text-center transition-all duration-200 hover:border-white/[0.2] hover:bg-muted/20 cursor-pointer shadow-inner shadow-black/10",
 				className,
 			)}
 			onDragOver={(e) => e.preventDefault()}

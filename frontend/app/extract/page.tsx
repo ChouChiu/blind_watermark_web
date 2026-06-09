@@ -99,8 +99,8 @@ export default function ExtractPage() {
 	}, [result, resultMode]);
 
 	return (
-		<div className="mx-auto max-w-5xl px-6 py-10">
-			<div className="mb-8 animate-page-enter">
+		<div className="mx-auto max-w-5xl px-4 sm:px-6 py-6 sm:py-10">
+			<div className="mb-6 sm:mb-8 animate-page-enter">
 				<h1 className="text-2xl font-semibold tracking-tight text-foreground">
 					提取水印
 				</h1>
@@ -322,7 +322,7 @@ export default function ExtractPage() {
 					)}
 
 					{!result && !resultBits && !isLoading && (
-						<div className="flex flex-1 items-center justify-center rounded-2xl border border-dashed border-white/[0.08] bg-card/30 p-16">
+						<div className="flex flex-1 items-center justify-center rounded-2xl border border-dashed border-white/[0.08] bg-card/30 p-8 sm:p-16">
 							<p className="text-sm text-muted-foreground/60">
 								提取结果将显示在此处
 							</p>

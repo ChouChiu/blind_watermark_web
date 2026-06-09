@@ -41,7 +41,7 @@ export function ImagePreview({
 			<img
 				src={displayUrl}
 				alt={alt}
-				className="max-h-[400px] max-w-full rounded-lg object-contain"
+				className="max-h-[250px] sm:max-h-[400px] max-w-full rounded-lg object-contain"
 			/>
 		</div>
 	);
