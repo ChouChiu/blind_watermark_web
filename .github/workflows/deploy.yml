@@ -16,6 +16,8 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             cd /opt/blind-watermark-web
-            git pull origin main
-            docker compose up --build -d --remove-orphans
+            git fetch origin main
+            git reset --hard origin/main
+            docker compose build --no-cache frontend
+            docker compose up -d --remove-orphans
             docker image prune -f
