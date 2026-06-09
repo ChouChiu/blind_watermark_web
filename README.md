@@ -46,7 +46,6 @@ blind_watermark_web/
 │   ├── lib/api.ts           # API 客户端
 │   └── package.json
 ├── docker-compose.yml       # 生产部署配置
-├── deploy.sh                # 手动部署脚本
 ├── dev.sh                   # 一键启动脚本
 └── AGENTS.md
 ```
@@ -150,14 +149,6 @@ docker compose up --build -d
 
 - 前端: http://localhost:3080
 - 后端: http://localhost:8001
-
-### 手动部署到 VPS
-
-```bash
-./deploy.sh
-```
-
-该脚本将项目打包 (排除 `.venv`、`node_modules`、`.next`、`.git`)，通过 SCP 传输到 VPS，然后执行 `docker compose up --build`。
 
 ### CI/CD 自动部署
 
